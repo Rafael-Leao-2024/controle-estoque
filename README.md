@@ -26,7 +26,7 @@ Antes de executar o projeto, é necessário garantir que você tenha instalado:
     - Porta: `3306`
     - Nome do banco de dados: `estoquementoria`
     - Usuário: `root`
-    - Senha: `5811`
+    - Senha: `PASSWORD`
 
 2. No banco de dados MySQL, crie a tabela `Insumos` com a seguinte estrutura:
 
