@@ -9,7 +9,7 @@ import tkinter.messagebox
 import pyodbc
 
 # integração com o Banco de Dados
-dados_conexao = ("DRIVER={MySQL ODBC 9.1 ANSI Driver}; SERVER=localhost:3306;DATABASE=estoquementoria; UID=root; PASSWORD=5811;")
+dados_conexao = ("DRIVER={MySQL ODBC 9.1 ANSI Driver}; SERVER=localhost:3306;DATABASE=estoquementoria; UID=root; PASSWORD=PASSWORD;")
 conexao = pyodbc.connect(dados_conexao)
 cursor = conexao.cursor()
 
