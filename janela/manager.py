@@ -1,20 +1,15 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[15]:
-
-
 from tkinter import *
 import tkinter.messagebox
 import pyodbc
 
 # integração com o Banco de Dados
-dados_conexao = ("DRIVER={MySQL ODBC 9.1 ANSI Driver}; SERVER=localhost:3306;DATABASE=estoquementoria; UID=root; PASSWORD=PASSWORD;")
+dados_conexao = ("DRIVER={MySQL ODBC 9.1 ANSI Driver}; SERVER=localhost:3306;DATABASE=estoquementoria; UID=root; PASSWORD=5811;")
 conexao = pyodbc.connect(dados_conexao)
 cursor = conexao.cursor()
 
 # Insumosp
 print('ok banco')
+
 # procurar insumo
 def btn_clicked0():
     # pegar a informação do campo nome_insumo (entry1)
@@ -29,7 +24,9 @@ def btn_clicked0():
     # [(1, 'garrafa', '2050-12-31', 1, Decimal('9500.00'))]
     # entry0.delete("1.0", END)
     for linha in cursor.fetchall():
-        texto = f"Item: {linha.nome_insumo}\n Quantidade: {linha.qtde}\n Lote:{linha.lote}\n Validade:{linha.data_validade}\n"
+        quantidade = int(linha.qtde)
+        texto = f"Item: {linha.nome_insumo}\n Quantidade: {quantidade}\n Lote:{linha.lote}\n Validade:{linha.data_validade}\n"
+        print(quantidade)
         entry0.insert("1.0", texto)
 
 # deletar insumo
@@ -49,8 +46,8 @@ def btn_clicked1():
 # consumir insumo (registrar uso insumo)
 def btn_clicked2():
     # pegar a informação do campo nome_insumo (entry1)
-    # pegar a informação do campo qtde (entry4)
     nome_insumo = entry1.get()
+    # pegar a informação do campo qtde (entry4)   
     qtde_usada = entry4.get()
     # buscar o insumo pelo nome dele no banco de dados
     # diminuir da quantidade do insumo, a quantidade que eu consumi
@@ -69,15 +66,9 @@ def btn_clicked3():
     # pegar todos os campos
     nome_insumo = entry1.get()
     data_validade = entry2.get()
-    lote = entry3.get()
+    lote = int(entry3.get())
     qtde = entry4.get()
     
-    # rodar um procurar no banco de dados pelo insumo
-    # olhar o cursor.fetchall()
-    # se o insumo tiver dentro do cursor.fetchall()
-    # faço um update adicionando a quantidade
-    # caso contrário
-    # adicionar no banco de dados aquele insumo
     comando = f"""INSERT INTO Insumos(nome_insumo, data_validade, lote, qtde)
     VALUES
         ('{nome_insumo}', '{data_validade}', '{lote}', '{qtde}')"""
@@ -85,17 +76,6 @@ def btn_clicked3():
     cursor.commit()
     tkinter.messagebox.showinfo(title="Aviso Adicionar Produto",message="Produto Adicionado com Sucesso")
     print("Adicionar Insumo")
-#     entry1.delete()
-#     entry2.delete()
-#     entry3.delete()
-#     entry4.delete()
-    
-    
-# print(entry1.get()) -> nome_insumo
-# print(entry2.get()) -> data_validade
-# print(entry3.get()) -> lote
-# print(entry4.get()) -> quantidade
-# entry0.get("1.0", END) -> campo para exibir o produto do banco de dados
 
 window = Tk()
 
@@ -111,12 +91,12 @@ canvas = Canvas(
     relief = "ridge")
 canvas.place(x = 0, y = 0)
 
-background_img = PhotoImage(file =r"C:\Users\Positivo union\Controle de Estoque (CRUD com Python)\janela\background.png")
+background_img = PhotoImage(file =r"C:\Users\Positivo union\Controle de Estoque (CRUD com Python)\pasta_images\background.png")
 background = canvas.create_image(
     355.5, 323.0,
     image=background_img)
 
-img0 = PhotoImage(file = r"C:\Users\Positivo union\Controle de Estoque (CRUD com Python)\janela\img0.png")
+img0 = PhotoImage(file = r"C:\Users\Positivo union\Controle de Estoque (CRUD com Python)\pasta_images\img0.png")
 b0 = Button(
     image = img0,
     borderwidth = 0,
@@ -129,7 +109,7 @@ b0.place(
     width = 178,
     height = 38)
 
-img1 = PhotoImage(file = r"C:\Users\Positivo union\Controle de Estoque (CRUD com Python)\janela\img1.png")
+img1 = PhotoImage(file = r"C:\Users\Positivo union\Controle de Estoque (CRUD com Python)\pasta_images\img1.png")
 b1 = Button(
     image = img1,
     borderwidth = 0,
@@ -142,7 +122,7 @@ b1.place(
     width = 178,
     height = 36)
 
-img2 = PhotoImage(file = r"C:\Users\Positivo union\Controle de Estoque (CRUD com Python)\janela\img2.png")
+img2 = PhotoImage(file = r"C:\Users\Positivo union\Controle de Estoque (CRUD com Python)\pasta_images\img2.png")
 b2 = Button(
     image = img2,
     borderwidth = 0,
@@ -155,7 +135,7 @@ b2.place(
     width = 178,
     height = 35)
 
-img3 = PhotoImage(file = r"C:\Users\Positivo union\Controle de Estoque (CRUD com Python)\janela\img3.png")
+img3 = PhotoImage(file = r"C:\Users\Positivo union\Controle de Estoque (CRUD com Python)\pasta_images\img3.png")
 b3 = Button(
     image = img3,
     borderwidth = 0,
@@ -168,7 +148,7 @@ b3.place(
     width = 178,
     height = 34)
 
-entry0_img = PhotoImage(file = r"C:\Users\Positivo union\Controle de Estoque (CRUD com Python)\janela\img_textBox0.png")
+entry0_img = PhotoImage(file = r"C:\Users\Positivo union\Controle de Estoque (CRUD com Python)\pasta_images\img_textBox0.png")
 entry0_bg = canvas.create_image(
     455.0, 560.0,
     image = entry0_img)
@@ -183,7 +163,7 @@ entry0.place(
     width = 410,
     height = 114)
 
-entry1_img = PhotoImage(file = r"C:\Users\Positivo union\Controle de Estoque (CRUD com Python)\janela\img_textBox1.png")
+entry1_img = PhotoImage(file = r"C:\Users\Positivo union\Controle de Estoque (CRUD com Python)\pasta_images\img_textBox1.png")
 entry1_bg = canvas.create_image(
     517.0, 294.5,
     image = entry1_img)
@@ -198,7 +178,7 @@ entry1.place(
     width = 280,
     height = 31)
 
-entry2_img = PhotoImage(file = r"C:\Users\Positivo union\Controle de Estoque (CRUD com Python)\janela\img_textBox2.png")
+entry2_img = PhotoImage(file = r"C:\Users\Positivo union\Controle de Estoque (CRUD com Python)\pasta_images\img_textBox2.png")
 entry2_bg = canvas.create_image(
     517.0, 340.5,
     image = entry2_img)
@@ -213,7 +193,7 @@ entry2.place(
     width = 280,
     height = 31)
 
-entry3_img = PhotoImage(file = r"C:\Users\Positivo union\Controle de Estoque (CRUD com Python)\janela\img_textBox3.png")
+entry3_img = PhotoImage(file = r"C:\Users\Positivo union\Controle de Estoque (CRUD com Python)\pasta_images\img_textBox3.png")
 entry3_bg = canvas.create_image(
     517.0, 388.5,
     image = entry3_img)
@@ -228,7 +208,7 @@ entry3.place(
     width = 280,
     height = 31)
 
-entry4_img = PhotoImage(file = r"C:\Users\Positivo union\Controle de Estoque (CRUD com Python)\janela\img_textBox4.png")
+entry4_img = PhotoImage(file = r"C:\Users\Positivo union\Controle de Estoque (CRUD com Python)\pasta_images\img_textBox4.png")
 entry4_bg = canvas.create_image(
     517.0, 436.5,
     image = entry4_img)
@@ -245,4 +225,3 @@ entry4.place(
 
 window.resizable(False, False)
 window.mainloop()
-
