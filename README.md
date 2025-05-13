@@ -59,8 +59,8 @@ pip install pyodbc
 
 # Execute o script Python:
 
-```bash
 Copiar código
+```bash
 python controle_estoque.py
 ````
 # Interface Gráfica
